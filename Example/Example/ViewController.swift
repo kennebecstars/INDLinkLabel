@@ -16,11 +16,13 @@ class ViewController: UIViewController, INDLinkLabelDelegate {
         super.viewDidLoad()
         let RTFPath = Bundle.main.path(forResource: "text", ofType: "rtf")!
         let RTFData = try! Data(contentsOf: URL(fileURLWithPath: RTFPath))
-        let options = [NSDocumentTypeDocumentAttribute: NSRTFTextDocumentType]
         
         label.numberOfLines = 0
         do {
-            label.attributedText = try NSAttributedString(data: RTFData, options: options, documentAttributes: nil)
+            label.attributedText = try NSAttributedString(data: RTFData,
+                                                          options: [.documentType: NSAttributedString.DocumentType.rtf,
+                                                                    .characterEncoding: String.Encoding.utf8.rawValue],
+                                                          documentAttributes: nil)
         } catch _ {
             label.attributedText = nil
         }
